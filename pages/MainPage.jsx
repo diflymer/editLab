@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ButtonReg } from '../components/ButtonReg';
 import { FeaturesBlock } from '../components/FeaturesBlock';
@@ -131,7 +131,7 @@ export default function MainPage() {
             <HeroSection clickNumber={clickNumber} />
 
             {/* Таймер показывается только если with_timer = true */}
-            {siteVariant.with_timer && (
+            {variants.with_timer && (
                 <CountdownTimer targetDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} />
             )}
 
@@ -143,7 +143,7 @@ export default function MainPage() {
             <FeaturesBlock clickNumber={clickNumber} />
 
             {/* Блок с фото показывается только если with_photo = true */}
-            {siteVariant.with_photo && <TeacherBlock />}
+            {variants.with_photo && <TeacherBlock />}
 
             <ProgramBlock />
 
