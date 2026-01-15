@@ -128,7 +128,7 @@ export const HeroSection = ({ clickNumber }) => {
           <StatLabel>Уроков</StatLabel>
         </StatItem>
         <StatItem>
-          <StatNumber>{clickNumber}</StatNumber>
+          <StatNumber>72</StatNumber>
           <StatLabel>Записались сегодня</StatLabel>
         </StatItem>
       </StatsContainer>
