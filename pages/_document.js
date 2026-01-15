@@ -8,7 +8,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-<Script
+        <Script
           id="yandex-metrika"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -28,6 +28,12 @@ export default function Document() {
                 accurateTrackBounce: true,
                 ecommerce: "dataLayer",
                 ssr: true
+              });
+
+              // ⚠️ ДОБАВЛЯЕМ РУЧНОЙ HIT ДЛЯ ПРОВЕРКИ
+              ym(106270317, 'hit', window.location.pathname, {
+                referer: document.referrer || '',
+                title: document.title
               });
             `
           }}
