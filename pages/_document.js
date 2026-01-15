@@ -21,7 +21,7 @@ export default function Document() {
               })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
 
               ym(106270317, 'init', {
-                defer: true,  // ОТКЛЮЧАЕМ автоматическую отправку
+                defer: false,  // ОТКЛЮЧАЕМ автоматическую отправку
                 webvisor: true,
                 clickmap: true,
                 trackLinks: true,
@@ -31,10 +31,10 @@ export default function Document() {
               });
 
               // ⚠️ ДОБАВЛЯЕМ РУЧНОЙ HIT ДЛЯ ПРОВЕРКИ
-              ym(106270317, 'hit', window.location.pathname, {
-                referer: document.referrer || '',
-                title: document.title
-              });
+              // ym(106270317, 'hit', window.location.pathname, {
+              //   referer: document.referrer || '',
+              //   title: document.title
+              // });
 
               console.log('Script success??');
             `
