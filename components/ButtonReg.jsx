@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { yandexMetrika } from '../utils/yandexMetrika'
 
 const pulse = keyframes`
   0%, 100% {
@@ -62,6 +63,10 @@ const ButtonContainer = styled.button`
 export const ButtonReg = ({ clickNumber, setClickNumber, onClick }) => {
   const handleClick = () => {
     setClickNumber(clickNumber + 1);
+
+    //Достижение цели нажатия на кнопку
+    yandexMetrika.reachGoal('button_click');
+
     if (onClick) {
       onClick();
     } else {

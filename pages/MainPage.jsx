@@ -9,6 +9,7 @@ import { TestimonialsBlock } from '../components/TestimonialsBlock';
 import { CTABlock } from '../components/CTABlock';
 import { TeacherBlock } from '../components/TeacherBlock';
 import { CountdownTimer } from '../components/CountdownTimer';
+import { yandexMetrika } from '../utils/yandexMetrika'
 
 const MainPageContainer = styled.div`
     display: flex;
@@ -59,6 +60,13 @@ export default function MainPage() {
     const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
+
+        //Достижение цели нажатия на кнопку
+        yandexMetrika.reachGoal('button_click');
+
+        //Достижение цели отправки формы
+        yandexMetrika.reachGoal('form_submit');
+
         e?.preventDefault?.();
         setSubmitted(true);
     };
@@ -68,6 +76,10 @@ export default function MainPage() {
     };
 
     const handleCTAClick = () => {
+
+        //Достижение цели нажатия на кнопку
+        yandexMetrika.reachGoal('button_click');
+
         const formElement = document.getElementById('signup-form');
         if (formElement) {
             formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -79,7 +91,7 @@ export default function MainPage() {
             <HeroSection clickNumber={clickNumber} />
 
             {/* <CountdownTimer targetDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} /> */}
-            
+
             <ButtonReg
                 clickNumber={clickNumber}
                 setClickNumber={setClickNumber}
