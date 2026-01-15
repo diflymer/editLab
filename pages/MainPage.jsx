@@ -54,33 +54,50 @@ const ScrollIndicator = styled.div`
     }
 `;
 
-// Получаем флаги из конфигурации или URL
-const getSiteVariant = () => {
-    // Вариант A: Из URL параметров
-    if (typeof window !== 'undefined') {
-        const urlParams = new URLSearchParams(window.location.search)
-        return {
-            with_photo: urlParams.get('with_photo') === 'true',
-            with_timer: urlParams.get('with_timer') === 'true'
-        }
-    }
-
-    // Вариант B: Из переменных окружения
-    return {
-        with_photo: process.env.NEXT_PUBLIC_WITH_PHOTO === 'true',
-        with_timer: process.env.NEXT_PUBLIC_WITH_TIMER === 'true'
-    }
-
-    // Вариант C: Фиксированная конфигурация
-    // return { with_photo: true, with_timer: false }
-}
 
 export default function MainPage() {
     const [clickNumber, setClickNumber] = useState(0);
     const [email, setEmail] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
-    const siteVariant = getSiteVariant()
+    const [variants, setVariants] = useState({
+        with_photo: false,
+        with_timer: false
+    });
+
+    useEffect(() => {
+        // Функция для запроса флагов у Вариокуба
+        const fetchVariants = () => {
+            // Убедитесь, что функция ymab загружена (скрипт Вариокуба)
+            if (typeof window !== 'undefined' && window.ymab) {
+                // Замените XXXXXXXX на ID вашего счетчика Яндекс.Метрики
+                window.ymab('metrika.106270317', 'getFlags', function (flags) {
+                    // flags - это объект с флагами для текущего посетителя
+                    console.log('Получены флаги из Вариокуба:', flags);
+
+                    // Пример: если в интерфейсе Вариокуба вы создали флаг 'show_photo'
+                    // со значением 'true' для одного из вариантов, то в объекте flags
+                    // будет ключ 'show_photo' со значением ['true']
+                    const newVariants = {
+                        with_photo: flags?.with_photo?.[0] === 'true' || false,
+                        with_timer: flags?.with_timer?.[0] === 'true' || false,
+                    };
+                    setVariants(newVariants);
+                });
+            } else {
+                // Если Вариокуб не загружен, можно установить значения по умолчанию
+                console.warn('Функция ymab (Вариокуб) не найдена. Использую флаги по умолчанию.');
+            }
+        };
+
+        // Запрашиваем флаги при монтировании компонента
+        fetchVariants();
+
+        // Если сайт SPA, может потребоваться повторно запрашивать флаги при изменении URL
+        // const handleRouteChange = () => { fetchVariants(); };
+        // router.events.on('routeChangeComplete', handleRouteChange);
+        // return () => { router.events.off('routeChangeComplete', handleRouteChange); };
+    }, []); // Зависимости: пустой массив, чтобы эффект сработал один раз при монтировании
 
     const handleSubmit = (e) => {
 
