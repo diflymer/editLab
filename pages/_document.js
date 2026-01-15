@@ -35,6 +35,8 @@ export default function Document() {
                 referer: document.referrer || '',
                 title: document.title
               });
+
+              console.log('Script success??');
             `
           }}
         />
