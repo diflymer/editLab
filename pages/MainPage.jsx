@@ -54,10 +54,33 @@ const ScrollIndicator = styled.div`
     }
 `;
 
+// Получаем флаги из конфигурации или URL
+const getSiteVariant = () => {
+    // Вариант A: Из URL параметров
+    if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search)
+        return {
+            with_photo: urlParams.get('with_photo') === 'true',
+            with_timer: urlParams.get('with_timer') === 'true'
+        }
+    }
+
+    // Вариант B: Из переменных окружения
+    return {
+        with_photo: process.env.NEXT_PUBLIC_WITH_PHOTO === 'true',
+        with_timer: process.env.NEXT_PUBLIC_WITH_TIMER === 'true'
+    }
+
+    // Вариант C: Фиксированная конфигурация
+    // return { with_photo: true, with_timer: false }
+}
+
 export default function MainPage() {
     const [clickNumber, setClickNumber] = useState(0);
     const [email, setEmail] = useState('');
     const [submitted, setSubmitted] = useState(false);
+
+    const siteVariant = getSiteVariant()
 
     const handleSubmit = (e) => {
 
@@ -90,7 +113,10 @@ export default function MainPage() {
         <MainPageContainer>
             <HeroSection clickNumber={clickNumber} />
 
-            {/* <CountdownTimer targetDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} /> */}
+            {/* Таймер показывается только если with_timer = true */}
+            {siteVariant.with_timer && (
+                <CountdownTimer targetDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)} />
+            )}
 
             <ButtonReg
                 clickNumber={clickNumber}
@@ -99,7 +125,8 @@ export default function MainPage() {
 
             <FeaturesBlock clickNumber={clickNumber} />
 
-            {/* <TeacherBlock /> */}
+            {/* Блок с фото показывается только если with_photo = true */}
+            {siteVariant.with_photo && <TeacherBlock />}
 
             <ProgramBlock />
 
