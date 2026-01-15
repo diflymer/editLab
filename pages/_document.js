@@ -22,11 +22,13 @@ export default function Document() {
 
     ym(106270317, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
 
-              // ⚠️ ДОБАВЛЯЕМ РУЧНОЙ HIT ДЛЯ ПРОВЕРКИ
-              // ym(106270317, 'hit');
-
-              console.log('with new script');
-            `
+        (function(e, x, pe, r, i, me, nt){
+    e[i]=e[i]||function(){(e[i].a=e[i].a||[]).push(arguments)},
+    me=x.createElement(pe),me.async=1,me.src=r,nt=x.getElementsByTagName(pe)[0],me.addEventListener('error',function(){function cb(t){t=t[t.length-1],'function'==typeof t&&t({flags:{}})};Array.isArray(e[i].a)&&e[i].a.forEach(cb);e[i]=function(){cb(arguments)}}),nt.parentNode.insertBefore(me,nt)})
+    (window, document, 'script', 'https://abt.s3.yandex.net/expjs/latest/exp.js', 'ymab');
+    ymab('metrika.106270317', 'init'/*, {clientFeatures}, {callback}*/);
+    console.log('Code variocube success')        
+    `
           }}
         />
         <noscript>
